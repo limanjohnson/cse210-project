@@ -30,8 +30,8 @@ public class PromptGenerator
         return _prompts[index];
     }
 
-    public static void DisplayRandomPrompt()
-    {
-        Console.WriteLine(GetRandomPrompt());
-    }
+    // public static string DisplayRandomPrompt()
+    // {
+    //     return GetRandomPrompt();
+    // }
 }
