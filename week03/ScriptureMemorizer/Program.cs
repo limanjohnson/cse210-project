@@ -2,6 +2,19 @@ using System;
 
 using ScriptureMemorizer;
 
+/*
+ * Liam Nell
+ * Scripture Memorizer
+ * Version 1.2
+ *
+ * This program helps users memorize one of three scriptures.
+ * There is a main menu from which they can choose a scriptures.
+ * After completing a scripture they can return to the main menu and choose a different scripture to memorize
+ * The hidden scripture is resest each time to display all words when a user returns to the main menu.
+ *
+ * 
+ */
+
 class Program
 {
         static void Main(string[] args)
