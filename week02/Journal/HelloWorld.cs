@@ -15,7 +15,5 @@ public class HelloWorld
         //when Console.WriteLine() is used
         Console.WriteLine();
 
-        Console.WriteLine("end of the program");
-
     }
 }
