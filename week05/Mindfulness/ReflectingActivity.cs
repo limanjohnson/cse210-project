@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Mindfulness;
 
 class ReflectingActivity : Activity
@@ -25,15 +27,17 @@ class ReflectingActivity : Activity
         "How can you keep this experience in mind in the future?"
     };
 
-    public ReflectingActivity(string name, string description, int duration) : base(name, description, duration)
-    {
-    }
+    public ReflectingActivity() : base("Reflecting Activity", "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.")
+    {}
 
     public void Run()
     {
-        Console.WriteLine(DisplayStartingMessage());
-        ShowCountdown();
-        Console.WriteLine(DisplayEndingMessage());
+        DisplayStartingMessage();
+        DisplayPrompt();
+        ShowCountDown(5);
+        DisplayQuestion();
+        DisplayEndingMessage();
+
     }
 
     public string GetRandomPrompt()
@@ -52,30 +56,43 @@ class ReflectingActivity : Activity
         return _prompts[index];
     }
 
-    public string GetRandomQuestion()
+    public void DisplayPrompt()
     {
-        int questionCount = _questions.Count;
+        Console.WriteLine($"Reflect on this prompt: {GetRandomPrompt()}");
+    }
 
-        // Check if there are questions in the list
-        if (_questions.Count == 0)
+    public void DisplayQuestion()
+    {
+        Queue<string> questionQueue = ShuffledQuestions();
+        int elapsed = 0;
+
+        while (elapsed < GetDuration())
         {
-            return "There is an error with the questions.";
+            if (questionQueue.Count == 0)
+            {
+                questionQueue = ShuffledQuestions();
+            }
+            
+            string question = questionQueue.Dequeue();
+            Console.WriteLine(question);
+            ShowSpinner(15);
+            elapsed += 15;
         }
 
-        // Select random question from _questions list
-        Random randomQuestion = new Random();
-        int index = randomQuestion.Next(_questions.Count);
-        return _questions[index];
     }
 
-    public void GetPrompt()
+    private Queue<string> ShuffledQuestions()
     {
-        GetRandomPrompt();
-    }
-
-    public void GetQuestion()
-    {
-        GetRandomQuestion();
+        Random random = new Random();
+        List<string> shuffledQuestionList = new List<string>(_questions);
+        
+        // Fisher-Yates algorithm
+        for (int i = shuffledQuestionList.Count - 1; i > 0; i--)
+        {
+            int j = random.Next(i + 1);
+            (shuffledQuestionList[i], shuffledQuestionList[j]) = (shuffledQuestionList[j], shuffledQuestionList[i]);
+        }
+        return new Queue<string>(shuffledQuestionList);
     }
 
 
