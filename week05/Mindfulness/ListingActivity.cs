@@ -24,7 +24,7 @@ class ListingActivity : Activity
         GetRandomPrompt();
         ShowCountDown(3);
         
-        List<string> userResponses = GetListFromUser();
+        List<string> userResponses = CaptureUserResponses();
         _count = userResponses.Count;
         
         Console.WriteLine("You have listed " + _count + " items.");
@@ -48,7 +48,7 @@ class ListingActivity : Activity
 
     }
 
-    public List<string> GetListFromUser()
+    public List<string> CaptureUserResponses()
     {
         List<string> userResponses = new List<string>();
         DateTime startTime = DateTime.Now;
