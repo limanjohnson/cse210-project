@@ -2,9 +2,9 @@ using System;
 
 namespace Shapes
 {
-    class Circle
+    public class Circle : Shape
     {
-        private double _radius
+        private double _radius;
 
         public Circle(string color, double radius) : base (color)
         {

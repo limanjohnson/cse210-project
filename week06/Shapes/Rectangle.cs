@@ -1,8 +1,8 @@
-using System
+using System;
 
 namespace Shapes
 {
-    class Rectangle : Shapes
+    public class Rectangle : Shape
     {
         private double _length;
         private double _width;

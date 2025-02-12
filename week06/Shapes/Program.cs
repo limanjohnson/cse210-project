@@ -1,5 +1,5 @@
 using System;
-
+namespace Shapes;
 class Program
 {
     static void Main(string[] args)
@@ -23,9 +23,9 @@ class Program
         {
             string color = shape.GetColor();
 
-            double area = shape.GetArea();
+            double area = Math.Round(shape.GetArea(), 2);
 
-            Console.WriteLine($"The {color} shape has an area of {area}")
+            Console.WriteLine($"The {color} shape has an area of {area}");
         }
 
 

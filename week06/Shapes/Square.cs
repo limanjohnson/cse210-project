@@ -1,8 +1,8 @@
 using System;
 
-using namespace 
+namespace Shapes
 {
-    class Square : Shapes 
+    public class Square : Shape 
     {
 
         private double _side;
@@ -12,9 +12,9 @@ using namespace
             _side = side;
         }
 
-        public override double GetArea(){
+        public override double GetArea()
+        {
             return _side * _side;
         }
-
     }
 }
