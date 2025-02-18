@@ -15,11 +15,6 @@ public class GoalManager
         _totalPoints = 0;
     }
 
-    public void Start()
-    {
-        Console.WriteLine("Welcome to Eternal Quest!");
-    }
-
     public void DisplayPlayerInfo()
     {
         Console.WriteLine($"Total XP: {_totalPoints}");
@@ -84,29 +79,36 @@ public class GoalManager
         Console.WriteLine("1. Simple Goal");
         Console.WriteLine("2. Eternal Goal");
         Console.WriteLine("3. Checklist Goal");
-        Console.Write("Enter your choice (1-3): ");
-        int choice = int.Parse(Console.ReadLine());
 
-        bool isValidChoice = choice >= 1 && choice <= 3;
-
-        if (!isValidChoice)
+        int choice;
+        while (true)
         {
-            Console.WriteLine("Sorry, you selected an invalid option. Please select a number from the menu.");
+            Console.Write("Enter your choice (1-3): ");
+            if (int.TryParse(Console.ReadLine(), out choice) && choice >= 1 && choice <= 3)
+            {
+                break;
+            }
+
+            Console.WriteLine("Sorry, you entered an invalid choice. Please select a valid choice from the menu.");
         }
 
         Console.Write("Enter goal name: ");
         string name = Console.ReadLine();
+        
         Console.Write("Enter a description: ");
         string description = Console.ReadLine();
-        Console.Write("Enter the amount of points awarded for completing this goal: ");
-        int points = int.Parse(Console.ReadLine());
-
-        bool isValidPoints = points >= 0;
-
-        if (!isValidPoints)
+        
+        int points;
+        while (true)
         {
+            Console.Write("Enter the amount of points awarded for completing this goal: ");
+            if (int.TryParse(Console.ReadLine(), out points) && points >= 0)
+            {
+                break;
+            }
+
             Console.WriteLine(
-                "Sorry, you entered an invalid amount of points. Please enter an amount equal to or greater than 0.");
+                "Sorry, you entered an invalid amount of points. Please enter a number greater than or equal to 0.");
         }
         
         switch (choice)
@@ -118,19 +120,36 @@ public class GoalManager
                 _goals.Add(new EternalGoal(name, description, points));
                 break;
             case 3:
-                Console.Write("Enter the amount of times you would like to complete this goal: ");
-                int amountTarget = int.Parse(Console.ReadLine());
-                Console.Write("Enter bonus points awarded upon completion: ");
-                int bonusPoints = int.Parse(Console.ReadLine());
+                int amountTarget;
+                while (true)
+                {
+                    Console.Write("Enter the amount of times you would like to complete this goal: ");
+                    if (int.TryParse(Console.ReadLine(), out amountTarget) && amountTarget >= 0)
+                    {
+                        break;
+                    }
+
+                    Console.WriteLine("Invalid choice, you must enter a positive number.");
+                }
+
+                int bonusPoints;
+                while (true)
+                {
+                    Console.Write("Enter bonus points awarded upon completion: ");
+                    if (int.TryParse(Console.ReadLine(), out bonusPoints) && bonusPoints >= 0)
+                    {
+                        break;
+                    }
+
+                    Console.WriteLine("Invalid choice, you must enter a positive number.");
+                }
                 
                 ChecklistGoal newGoal = new ChecklistGoal(name, description, points, amountTarget, bonusPoints);
                 _goals.Add(newGoal);
                 break;
-            default:
-                Console.WriteLine("Invalid choice. Please try again.");
-                break;  
         }
-        
+
+        Console.WriteLine("Goal created successfully!");
     }
 
     public void RecordEvent()
@@ -189,6 +208,13 @@ public class GoalManager
 
         // Increment total points for valid goals
         _totalPoints += selectedGoal.GetXp();
+
+        if (selectedGoal is ChecklistGoal checklistGoal && checklistGoal.IsComplete())
+        {
+            _totalPoints += checklistGoal.GetBonusXp();
+            Console.WriteLine($"Bonus XP awarded: {checklistGoal.GetBonusXp()}!");
+        }
+        
 
         Console.WriteLine($"Event recorded successfully for {selectedGoal.GetName()}!");
         Console.WriteLine($"Total XP: {_totalPoints}");

@@ -6,12 +6,12 @@ class Program
     static void Main(string[] args)
     {
         GoalManager goalManager = new GoalManager();
-
+        Console.Clear();
+        Console.WriteLine("Welcome to Eternal Quest!");
+        
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("Welcome to Eternal Quest!\n");
-            
             goalManager.DisplayPlayerInfo();
             
             Console.WriteLine("\nSelect an option: ...");
